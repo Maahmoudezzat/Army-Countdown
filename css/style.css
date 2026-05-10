@@ -1,0 +1,431 @@
+/* ══════════════════════════════════════════
+   عداد الخدمة العسكرية - محمود عزت الخولي
+   style.css
+   ══════════════════════════════════════════ */
+
+:root {
+  --bg:           #080e0a;
+  --bg2:          #0f1a12;
+  --bg3:          #162019;
+  --border:       #2a4030;
+  --text:         #b8cfc0;
+  --text-dim:     #5a7a64;
+  --accent:       #3d8b5a;
+  --accent-bright:#52b571;
+  --yellow:       #e8b84b;
+  --blue:         #3a8fd4;
+  --green:        #3dab62;
+  --red:          #d44a3a;
+  --glow:         rgba(61,139,90,0.3);
+}
+
+/* ── RESET ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── BODY ── */
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  direction: rtl;
+  position: relative;
+}
+
+/* scanline overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* green radial glow */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(61,139,90,0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── LAYOUT ── */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── HEADER ── */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0 24px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.logo-area { display: flex; align-items: center; gap: 14px; }
+
+.shield { width: 48px; height: 54px; flex-shrink: 0; }
+.shield svg { width: 100%; height: 100%; }
+
+.title-block h1 {
+  font-size: clamp(1rem, 3.5vw, 1.35rem);
+  font-weight: 900;
+  color: var(--accent-bright);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-shadow: 0 0 20px rgba(82,181,113,0.4);
+}
+
+.title-block p {
+  font-size: clamp(0.65rem, 2vw, 0.75rem);
+  color: var(--text-dim);
+  font-weight: 400;
+  margin-top: 3px;
+}
+
+.clock-block { text-align: left; direction: ltr; }
+
+#live-clock {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(1.3rem, 5vw, 2rem);
+  color: var(--accent-bright);
+  text-shadow: 0 0 16px var(--glow);
+  letter-spacing: 0.05em;
+}
+
+.clock-date {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-align: center;
+  margin-top: 2px;
+  direction: rtl;
+}
+
+/* ── STATUS CARD ── */
+.status-card {
+  margin: 20px 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.status-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.status-value {
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── STATUS GIF ── */
+#status-gif {
+  display: none;
+  height: 90px;
+  width: auto;
+  max-width: 130px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+  margin-right: auto; /* pushes GIF to far left in RTL flex */
+  border: 1px solid var(--border);
+}
+
+/* ── PULSE DOT ── */
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: pulse 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .7; transform: scale(1.2); }
+}
+
+/* status colour variants */
+.status-service .pulse-dot   { background: var(--blue); }
+.status-service .status-value { color: var(--blue); }
+.status-off     .pulse-dot   { background: var(--green); }
+.status-off     .status-value { color: var(--green); }
+.status-waiting .pulse-dot   { background: var(--yellow); }
+.status-waiting .status-value { color: var(--yellow); }
+.status-done    .pulse-dot   { background: var(--accent-bright); }
+.status-done    .status-value { color: var(--accent-bright); }
+
+/* ── PERCENTAGE HERO ── */
+.pct-hero { text-align: center; margin: 24px 0 8px; }
+
+.pct-hero .pct-num {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(3.5rem, 14vw, 6rem);
+  font-weight: 400;
+  color: var(--accent-bright);
+  text-shadow: 0 0 40px rgba(82,181,113,0.5), 0 0 80px rgba(82,181,113,0.2);
+  line-height: 1;
+}
+
+.pct-hero .pct-sub {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+  letter-spacing: 0.08em;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-section { margin: 16px 0 20px; }
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.progress-header span {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-family: 'Share Tech Mono', monospace;
+  direction: ltr;
+}
+
+.progress-bar-wrap {
+  background: #0a1209;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  height: 36px;
+  display: flex;
+  position: relative;
+  overflow: visible;
+}
+
+.progress-bar-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.seg {
+  height: 100%;
+  position: relative;
+  transition: filter 0.2s;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.seg:hover { filter: brightness(1.35); }
+
+/* segment colours */
+.seg-remaining { background: rgba(200,216,204,0.14); border-right: 1px dashed rgba(200,216,204,0.25); }
+.seg-pre-entry { background: linear-gradient(180deg,#f0c84e,#c9993a); }
+.seg-faculty   { background: linear-gradient(180deg,#e05555,#a82828); }
+.seg-service   { background: linear-gradient(180deg,#4a9fde,#2870b0); }
+.seg-off       { background: linear-gradient(180deg,#52c47a,#2e8b50); }
+
+/* today marker */
+.today-marker {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(255,255,255,0.8);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.today-marker::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  color: #fff;
+  white-space: nowrap;
+  font-family: 'Cairo', sans-serif;
+}
+
+/* finish flag */
+.flag-end {
+  position: absolute;
+  top: 50%; left: 4px;
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  line-height: 1;
+  z-index: 10;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px rgba(0,0,0,0.8));
+}
+
+/* bar date labels */
+.progress-markers {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.progress-markers span { font-size: 0.65rem; color: var(--text-dim); }
+
+/* ── FLOATING TOOLTIP ── */
+#bar-tooltip {
+  display: none;
+  position: fixed;
+  background: #0f1a12;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  z-index: 9999;
+  color: var(--text);
+  pointer-events: none;
+  direction: rtl;
+  text-align: center;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 0 12px rgba(61,139,90,0.2);
+  line-height: 1.8;
+  transform: translate(-50%, -110%);
+}
+
+#bar-tooltip .tip-days {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.3rem;
+  color: var(--accent-bright);
+  display: block;
+  font-weight: bold;
+}
+
+#bar-tooltip .tip-label { color: var(--text); display: block; font-weight: 600; }
+#bar-tooltip .tip-dates { color: var(--text-dim); font-size: 0.7rem; display: block; direction: ltr; }
+
+/* ── STATS GRID ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 0 0 24px;
+}
+
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 14px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,rgba(61,139,90,0.05) 0%,transparent 60%);
+  pointer-events: none;
+}
+
+.stat-card .s-label {
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.stat-card .s-val {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  color: var(--accent-bright);
+  text-shadow: 0 0 16px rgba(82,181,113,0.4);
+  line-height: 1;
+}
+
+.stat-card .s-unit { font-size: 0.72rem; color: var(--text-dim); margin-top: 4px; }
+
+/* ── LEGEND ── */
+.legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 28px;
+  padding: 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.legend-item { display: flex; align-items: center; gap: 7px; font-size: 0.78rem; color: var(--text); }
+
+.legend-dot { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+
+.ld-yellow { background: linear-gradient(180deg,#f0c84e,#c9993a); }
+.ld-red    { background: linear-gradient(180deg,#e05555,#a82828); }
+.ld-blue   { background: linear-gradient(180deg,#4a9fde,#2870b0); }
+.ld-green  { background: linear-gradient(180deg,#52c47a,#2e8b50); }
+.ld-white  { background: rgba(200,216,204,0.2); border: 1px solid rgba(200,216,204,0.35); }
+
+/* ── CORNER DECORATIONS ── */
+.corner-tl, .corner-br {
+  position: fixed;
+  width: 60px; height: 60px;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.corner-tl { top:10px; right:10px; border-top:2px solid var(--accent-bright); border-right:2px solid var(--accent-bright); }
+.corner-br { bottom:10px; left:10px; border-bottom:2px solid var(--accent-bright); border-left:2px solid var(--accent-bright); }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+  line-height: 2;
+}
+
+footer strong { color: var(--accent-bright); font-size: 0.9rem; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 560px) {
+  .stats-grid { grid-template-columns: repeat(3,1fr); gap: 8px; }
+  .stat-card  { padding: 12px 8px; }
+  .stat-card .s-val { font-size: 1.25rem; }
+  header { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 400px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .stat-card:last-child { grid-column: span 2; }
+}

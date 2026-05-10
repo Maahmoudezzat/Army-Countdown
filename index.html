@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عداد الخدمة العسكرية - محمود عزت الخولي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="corner-tl"></div>
+  <div class="corner-br"></div>
+
+  <div class="container">
+
+    <!-- ── HEADER ── -->
+    <header>
+      <div class="logo-area">
+        <div class="shield">
+          <svg viewBox="0 0 48 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 2L44 10V26C44 37 34 47 24 52C14 47 4 37 4 26V10L24 2Z" stroke="#3d8b5a" stroke-width="2" fill="none"/>
+            <path d="M24 8L40 15V28C40 36.5 32 44.5 24 48.5C16 44.5 8 36.5 8 28V15L24 8Z" fill="rgba(61,139,90,0.15)" stroke="#52b571" stroke-width="1.5"/>
+            <text x="24" y="33" text-anchor="middle" font-family="Cairo" font-size="16" font-weight="900" fill="#52b571">م</text>
+          </svg>
+        </div>
+        <div class="title-block">
+          <h1>عداد الخدمة العسكرية</h1>
+          <p>خاصة جندي مجند / محمود عزت الخولي</p>
+        </div>
+      </div>
+      <div class="clock-block">
+        <div id="live-clock">00:00:00</div>
+        <div class="clock-date" id="live-date">—</div>
+      </div>
+    </header>
+
+    <!-- ── CURRENT STATUS ── -->
+    <div class="status-card" id="status-card">
+      <div>
+        <div class="status-label">الحالة الحالية</div>
+        <div class="status-value" id="status-value">
+          <span class="pulse-dot"></span>
+          <span id="status-text">جاري التحميل...</span>
+        </div>
+      </div>
+      <!-- GIF: off.webp or service.webp — injected by JS, shown on far left -->
+      <img id="status-gif" src="" alt="status">
+    </div>
+
+    <!-- ── PERCENTAGE ── -->
+    <div class="pct-hero">
+      <div class="pct-num" id="pct-num">0%</div>
+      <div class="pct-sub">من إجمالي فترة الخدمة مكتملة</div>
+    </div>
+
+    <!-- ── PROGRESS BAR ── -->
+    <div class="progress-section">
+      <div class="progress-header">
+        <span>02/04/2025</span>
+        <span>01/12/2026</span>
+      </div>
+      <div class="progress-bar-wrap" id="progress-bar"></div>
+      <div class="progress-markers">
+        <span>يوم التجنيد</span>
+        <span>🎉 يوم فرحي 🎉</span>
+      </div>
+    </div>
+
+    <!-- Floating bar tooltip — positioned by JS, never clipped -->
+    <div id="bar-tooltip">
+      <span class="tip-days"  id="tip-days"></span>
+      <span class="tip-label" id="tip-label"></span>
+      <span class="tip-dates" id="tip-dates"></span>
+    </div>
+
+    <!-- ── STATS ── -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="s-label">أيام عدت</div>
+        <div class="s-val" id="days-done">0</div>
+        <div class="s-unit">يوم</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-label" style="font-size:0.6rem;">الأيام اللي فاضلة ومحمود عزت يخلص جيش</div>
+        <div class="s-val" id="days-left">0</div>
+        <div class="s-unit">يوم</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-label">إجمالي الخدمة</div>
+        <div class="s-val" id="days-total">0</div>
+        <div class="s-unit">يوم</div>
+      </div>
+    </div>
+
+    <!-- ── LEGEND ── -->
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot ld-yellow"></div><span>فترة التقديم والكشوفات والمناظرات والهجص ده كله</span></div>
+      <div class="legend-item"><div class="legend-dot ld-red"></div><span>كلية الضباط الاحتياط</span></div>
+      <div class="legend-item"><div class="legend-dot ld-blue"></div><span>فترة الخدمة كـــجندي مجند</span></div>
+      <div class="legend-item"><div class="legend-dot ld-green"></div><span>فترة الأجازة</span></div>
+      <div class="legend-item"><div class="legend-dot ld-white"></div><span>الأيام اللي فاضلة ومحمود عزت يخلص جيش</span></div>
+    </div>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+      <div>يارب قرب البعيد واجمعني بحبيبتي</div>
+      <div>— <strong>شهادة الجيش</strong> —</div>
+    </footer>
+
+  </div><!-- /.container -->
+
+  <script src="js/main.js"></script>
+</body>
+</html>
