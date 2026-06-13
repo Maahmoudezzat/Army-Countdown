@@ -19,14 +19,46 @@ const DISCHARGE     = new Date(2026, 11,  1, 0,0,0); // 01 Dec 2026 — الإن
 // ── HARDCODED OFF PERIODS ──
 // Note: JS months are 0-indexed (Jan=0 … Dec=11)
 const OFF_PERIODS = [
+  // ── past ──
   { start: new Date(2025,11,23,0,0,0), end: new Date(2026, 0, 2,0,0,0) }, // 23/12/2025 → 02/01/2026
   { start: new Date(2026, 0,27,0,0,0), end: new Date(2026, 1, 3,0,0,0) }, // 27/01/2026 → 03/02/2026
   { start: new Date(2026, 1,14,0,0,0), end: new Date(2026, 1,21,0,0,0) }, // 14/02/2026 → 21/02/2026
   { start: new Date(2026, 1,25,0,0,0), end: new Date(2026, 2, 3,0,0,0) }, // 25/02/2026 → 03/03/2026
   { start: new Date(2026, 2,30,0,0,0), end: new Date(2026, 3, 7,0,0,0) }, // 30/03/2026 → 07/04/2026
   { start: new Date(2026, 4, 4,0,0,0), end: new Date(2026, 4,11,0,0,0) }, // 04/05/2026 → 11/05/2026
-  { start: new Date(2026, 5, 8,0,0,0), end: new Date(2026, 5,15,0,0,0) }, // 08/06/2026 → 15/06/2026
+  { start: new Date(2026, 5, 8,0,0,0), end: new Date(2026, 5,15,0,0,0) }, // 08/06/2026 → 15/06/2026 
+  { start: new Date(2026, 6,14,0,0,0), end: new Date(2026, 6,20,0,0,0) }, // 14/07/2026 → 20/07/2026
+  { start: new Date(2026, 7,18,0,0,0), end: new Date(2026, 7,24,0,0,0) }, // 18/08/2026 → 24/08/2026
+  { start: new Date(2026, 8,22,0,0,0), end: new Date(2026, 8,28,0,0,0) }, // 22/09/2026 → 28/09/2026
+  { start: new Date(2026, 9,27,0,0,0), end: new Date(2026,10, 2,0,0,0) }, // 27/10/2026 → 02/11/2026
+  { start: new Date(2026,10,23,0,0,0), end: new Date(2026,11, 1,0,0,0) }, // 23/11/2026 → 01/12/2026 (redeif))
 ];
+
+// Total remaining off days from today
+function getRemainingOffDays() {
+  const now = new Date();
+  let total = 0;
+  for (const op of OFF_PERIODS) {
+    if (op.end <= now) continue;
+    const from = op.start < now ? now : op.start;
+    total += Math.ceil((op.end - from) / 86400000);
+  }
+  return total;
+}
+
+// Next upcoming off period (or current if in one)
+function getNextOffPeriod() {
+  const now = new Date();
+  // currently in one?
+  for (const op of OFF_PERIODS) {
+    if (now >= op.start && now <= op.end) return { current: true, end: op.end };
+  }
+  // next upcoming
+  const upcoming = OFF_PERIODS
+    .filter(op => op.start > now)
+    .sort((a, b) => a.start - b.start);
+  return upcoming.length ? { current: false, start: upcoming[0].start } : null;
+}
 
 // ── SEGMENT BUILDER ──
 function buildSegments() {
@@ -108,6 +140,7 @@ function fmtDate(d) {
          d.getFullYear();
 }
 
+
 // ── RENDER ──
 function render() {
   const now   = new Date();
@@ -118,14 +151,33 @@ function render() {
 
   document.getElementById('pct-num').textContent    = pct.toFixed(1) + '%';
   document.getElementById('days-done').textContent  = Math.floor(done  / 86400000).toLocaleString('ar-EG');
-  document.getElementById('days-left').textContent  = Math.ceil(left   / 86400000).toLocaleString('ar-EG');
-  document.getElementById('days-total').textContent = Math.floor(total / 86400000).toLocaleString('ar-EG');
+  const daysLeft = Math.ceil(left / 86400000);
+  const offLeft  = getRemainingOffDays();
+  const svcLeft  = Math.max(0, daysLeft - offLeft);
+  const next     = getNextOffPeriod();
+
+  document.getElementById('days-left').textContent    = daysLeft.toLocaleString('ar-EG');
+  document.getElementById('days-total').textContent   = Math.floor(total / 86400000).toLocaleString('ar-EG');
+  document.getElementById('days-off-left').textContent = offLeft.toLocaleString('ar-EG');
+  document.getElementById('days-svc-left').textContent = svcLeft.toLocaleString('ar-EG');
+
+  // next off period label
+  const nextEl = document.getElementById('next-off-label');
+  if (next) {
+    if (next.current) {
+      nextEl.textContent = '🟢 أجازة حالياً — بتخلص ' + fmtDate(next.end);
+    } else {
+      nextEl.textContent = '📅 الأجازة الجاية: ' + fmtDate(next.start);
+    }
+  }
 
   // Status
   const st = getCurrentStatus();
   document.getElementById('status-card').className   = 'status-card ' + st.cls;
   document.getElementById('status-text').textContent = st.text;
 
+  
+  
   // GIF
   const gif = document.getElementById('status-gif');
   if (st.cls === 'status-off') {

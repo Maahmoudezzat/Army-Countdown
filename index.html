@@ -35,18 +35,17 @@
       </div>
     </header>
 
-    <!-- ── CURRENT STATUS ── -->
     <div class="status-card" id="status-card">
-      <div>
-        <div class="status-label">الحالة الحالية</div>
-        <div class="status-value" id="status-value">
-          <span class="pulse-dot"></span>
-          <span id="status-text">جاري التحميل...</span>
-        </div>
+    <div>
+      <div class="status-label">الحالة الحالية</div>
+      <div class="status-value" id="status-value">
+        <span class="pulse-dot"></span>
+        <span id="status-text">جاري التحميل...</span>
       </div>
-      <!-- GIF: off.webp or service.webp — injected by JS, shown on far left -->
-      <img id="status-gif" src="" alt="status">
+      <div class="status-sub" id="status-sub"></div>
     </div>
+    <img id="status-gif" src="" alt="status">
+  </div>
 
     <!-- ── PERCENTAGE ── -->
     <div class="pct-hero">
@@ -81,11 +80,29 @@
         <div class="s-val" id="days-done">0</div>
         <div class="s-unit">يوم</div>
       </div>
+
       <div class="stat-card">
-        <div class="s-label" style="font-size:0.6rem;">الأيام اللي فاضلة ومحمود عزت يخلص جيش</div>
+        <div class="s-label" style="font-size:0.6rem;">
+          الأيام اللي فاضلة ومحمود عزت يخلص جيش
+        </div>
         <div class="s-val" id="days-left">0</div>
         <div class="s-unit">يوم</div>
+
+        <div class="stat-breakdown">
+          <div class="breakdown-item">
+            <span class="breakdown-num is-off" id="days-off-left">0</span>
+            <span class="breakdown-label">أجازة 🟢</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="breakdown-num is-service" id="days-svc-left">0</span>
+            <span class="breakdown-label">خدمة 🔵</span>
+          </div>
+        </div>
+
+        <div class="next-off-pill" id="next-off-label">—</div>
       </div>
+
+
       <div class="stat-card">
         <div class="s-label">إجمالي الخدمة</div>
         <div class="s-val" id="days-total">0</div>

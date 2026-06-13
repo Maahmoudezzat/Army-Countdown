@@ -128,6 +128,57 @@ header {
   flex-wrap: wrap;
 }
 
+.stat-breakdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.breakdown-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.breakdown-item + .breakdown-item {
+  border-right: 1px solid var(--border);
+}
+
+.breakdown-num {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.breakdown-num.is-off     { color: var(--green); text-shadow: 0 0 10px rgba(61,171,98,0.35); }
+.breakdown-num.is-service { color: var(--blue);  text-shadow: 0 0 10px rgba(58,143,212,0.35); }
+
+.breakdown-label {
+  font-size: 0.58rem;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+}
+
+/* next off period pill */
+.next-off-pill {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background: rgba(61,139,90,0.08);
+  border: 1px solid rgba(61,139,90,0.2);
+  border-radius: 20px;
+  font-size: 0.62rem;
+  color: var(--accent-bright);
+  text-align: center;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
 .status-label {
   font-size: 0.75rem;
   color: var(--text-dim);
