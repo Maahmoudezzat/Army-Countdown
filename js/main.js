@@ -1,14 +1,6 @@
-/* ══════════════════════════════════════════
-   عداد الخدمة العسكرية - محمود عزت الخولي
-   main.js
-   ══════════════════════════════════════════ */
-
-// ── GIF PATHS ──
-// Drop your two webp files inside assets/gifs/ with these exact names:
-//   assets/gifs/off.webp      → shown during off / leave periods
-//   assets/gifs/service.webp  → shown during active service
 const GIF_OFF     = 'assets/gifs/off.webp';
 const GIF_SERVICE = 'assets/gifs/service.webp';
+
 
 // ── HARDCODED DATES ──
 const ENROLLMENT    = new Date(2025,  3,  2, 0,0,0); // 02 Apr 2025
