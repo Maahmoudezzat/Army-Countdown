@@ -1,6 +1,9 @@
 const GIF_OFF     = 'assets/gifs/off.webp';
 const GIF_SERVICE = 'assets/gifs/service.webp';
 
+// ── 🧪 TEST MODE — fake "today" for testing ──
+//const FAKE_NOW = new Date(2026, 11, 17, 9, 0, 0); // 17 June 2026, 9:00 AM
+
 
 // ── HARDCODED DATES ──
 const ENROLLMENT    = new Date(2025,  3,  2, 0,0,0); // 02 Apr 2025
@@ -18,17 +21,18 @@ const OFF_PERIODS = [
   { start: new Date(2026, 1,25,0,0,0), end: new Date(2026, 2, 3,0,0,0) }, // 25/02/2026 → 03/03/2026
   { start: new Date(2026, 2,30,0,0,0), end: new Date(2026, 3, 7,0,0,0) }, // 30/03/2026 → 07/04/2026
   { start: new Date(2026, 4, 4,0,0,0), end: new Date(2026, 4,11,0,0,0) }, // 04/05/2026 → 11/05/2026
-  { start: new Date(2026, 5, 8,0,0,0), end: new Date(2026, 5,15,0,0,0) }, // 08/06/2026 → 15/06/2026 
-  { start: new Date(2026, 6,14,0,0,0), end: new Date(2026, 6,20,0,0,0) }, // 14/07/2026 → 20/07/2026
-  { start: new Date(2026, 7,18,0,0,0), end: new Date(2026, 7,24,0,0,0) }, // 18/08/2026 → 24/08/2026
-  { start: new Date(2026, 8,22,0,0,0), end: new Date(2026, 8,28,0,0,0) }, // 22/09/2026 → 28/09/2026
-  { start: new Date(2026, 9,27,0,0,0), end: new Date(2026,10, 2,0,0,0) }, // 27/10/2026 → 02/11/2026
-  { start: new Date(2026,10,23,0,0,0), end: new Date(2026,11, 1,0,0,0) }, // 23/11/2026 → 01/12/2026 (redeif))
+  { start: new Date(2026, 5, 8,0,0,0), end: new Date(2026, 5,16,0,0,0) }, // 08/06/2026 → 15/06/2026 
+  { start: new Date(2026, 6,13,0,0,0), end: new Date(2026, 6,20,0,0,0) }, // 13/07/2026 → 20/07/2026
+  { start: new Date(2026, 7,17,0,0,0), end: new Date(2026, 7,24,0,0,0) }, // 17/08/2026 → 24/08/2026
+  { start: new Date(2026, 8,21,0,0,0), end: new Date(2026, 8,28,0,0,0) }, // 21/09/2026 → 28/09/2026
+  { start: new Date(2026, 9,26,0,0,0), end: new Date(2026,10, 2,0,0,0) }, // 26/10/2026 → 02/11/2026
+  { start: new Date(2026,10,23,0,0,0), end: new Date(2026,11, 1,0,0,0) }, // 23/11/2026 → 01/12/2026 (اجازة رديف))
 ];
 
 // Total remaining off days from today
 function getRemainingOffDays() {
-  const now = new Date();
+  const now     = new Date();
+  //const now     = FAKE_NOW;
   let total = 0;
   for (const op of OFF_PERIODS) {
     if (op.end <= now) continue;
@@ -41,6 +45,7 @@ function getRemainingOffDays() {
 // Next upcoming off period (or current if in one)
 function getNextOffPeriod() {
   const now = new Date();
+  //const now = FAKE_NOW;
   // currently in one?
   for (const op of OFF_PERIODS) {
     if (now >= op.start && now <= op.end) return { current: true, end: op.end };
@@ -56,6 +61,7 @@ function getNextOffPeriod() {
 function buildSegments() {
   const totalMs = DISCHARGE - ENROLLMENT;
   const now     = new Date();
+  //const now     = FAKE_NOW;
   const cutoff  = now < DISCHARGE ? now : DISCHARGE;
   const segs    = [];
 
@@ -114,7 +120,8 @@ function buildSegments() {
 
 // ── STATUS ──
 function getCurrentStatus() {
-  const now = new Date();
+  const now     = new Date();
+  //const now     = FAKE_NOW;
   if (now < ENROLLMENT)   return { text: 'قبل التجنيد',          cls: 'status-waiting' };
   if (now >= DISCHARGE)   return { text: '✅ انتهت الخدمة!',      cls: 'status-done'    };
   if (now < SOLDIER_DATE) return { text: '🏫 في كلية الضباط الاحتياط', cls: 'status-waiting' };
@@ -135,7 +142,8 @@ function fmtDate(d) {
 
 // ── RENDER ──
 function render() {
-  const now   = new Date();
+  const now     = new Date();
+  //const now     = FAKE_NOW;
   const total = DISCHARGE - ENROLLMENT;
   const done  = Math.max(0, Math.min(now - ENROLLMENT, total));
   const left  = Math.max(0, DISCHARGE - now);
