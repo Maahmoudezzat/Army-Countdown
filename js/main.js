@@ -26,9 +26,8 @@ const OFF_PERIODS = [
   { start: new Date(2026, 7,10,0,0,0), end: new Date(2026, 7,17,0,0,0) }, // 
   { start: new Date(2026, 7,31,0,0,0), end: new Date(2026, 8, 7,0,0,0) }, // 
   { start: new Date(2026, 8,21,0,0,0), end: new Date(2026, 8, 28,0,0,0)}, //
-  { start: new Date(2026, 9,12,0,0,0), end: new Date(2026, 9, 19,0,0,0)}, //
-  { start: new Date(2026, 10,2,0,0,0), end: new Date(2026, 10, 9,0,0,0)}, //
-  { start: new Date(2026,10,23,0,0,0), end: new Date(2026,11, 1,0,0,0) }, // 23/11/2026 → 01/12/2026 (اجازة رديف))
+  { start: new Date(2026, 9,19,0,0,0), end: new Date(2026, 9, 26,0,0,0)}, //
+  { start: new Date(2026,10,16,0,0,0), end: new Date(2026,11, 1,0,0,0) }, // 23/11/2026 → 01/12/2026 (اجازة رديف))
 ];
 
 // Total remaining off days from today
